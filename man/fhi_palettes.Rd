@@ -5,12 +5,14 @@
 \alias{fhi_palettes}
 \title{FHI Color Palettes}
 \format{
-An object of class \code{list} of length 7.
+An object of class \code{list} of length 9.
 }
 \usage{
 fhi_palettes
 }
 \description{
-FHI Color Palettes
+Sequential ramps \code{grable} and \code{greige} are gråblå and greige from the FHI
+visual profile (see \url{https://www.fhi.no/om/fhi/visuell-profil/innhold/farger/}),
+ordered light to dark like the other quantitative palettes.
 }
 \keyword{datasets}

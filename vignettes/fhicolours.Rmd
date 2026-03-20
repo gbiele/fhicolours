@@ -16,7 +16,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **fhicolours** package provides scales for **ggplot2** that follow the Folkehelseinstituttet (FHI) palette guidance. Three common patterns are **qualitative** colours for categories, **quantitative** ramps for continuous values, and **diverging** scales for data with a meaningful midpoint.
+The **fhicolours** package provides scales for **ggplot2** aligned with Folkehelseinstituttet (FHI) palette guidance for figures and statistics.
+
+According to [**FHIs fargepalett**](https://www.fhi.no/om/fhi/visuell-profil/innhold/farger/), the overall visual palette includes **hovedfarger** (main blues, reds, greens, yellows), **gråfarger** (including gråblå and greige tones that work alongside the main colours), **ekstrafarger**, backgrounds, and a dedicated set of colours for **statistical visualization** (graphs, maps, diagrams). FHI applies these across fhi.no, social media, and other channels.
+
+The statistics-oriented advice on that page boils down to three patterns that this package mirrors:
+
+- **Quantitative (sequential)** ramps are built to keep contrast comparable across hues.
+- **Qualitative** colours stress lightness contrast to help meet accessibility expectations (WCAG and APCA). They are meant for categories **without** intrinsic order—examples FHI mentions include country, ethnicity, sex, or political party.
+- **Diverging** palettes suit numeric data with a **neutral centre**; FHI notes they can be extended using additional tones from **B2** and **R1**.
+
+FHI also specifies institutional **text** colour **`#222222`** for a softer alternative to pure black.
 
 ```{r setup}
 library(ggplot2)
@@ -25,7 +35,7 @@ library(fhicolours)
 
 ## Qualitative palettes
 
-Use `scale_color_fhi()` or `scale_fill_fhi()` with the default `discrete = TRUE` when the aesthetic maps to a factor or character variable. The `qualitative` palette gives distinct colours for up to sixteen classes (ggplot interpolates if you need more).
+Use `scale_color_fhi()` or `scale_fill_fhi()` with the default `discrete = TRUE` when the aesthetic maps to a factor or character variable. The `qualitative` palette follows the sixteen-colour ordered list under *Kvalitativ fargepalett* on the FHI page (ggplot interpolates if you need more).
 
 ```{r qualitative}
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
@@ -37,7 +47,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ## Quantitative palettes
 
-Sequential palettes such as `b2`, `r1`, `gr1`, and `gu1` are defined as ordered ramps. For a continuous variable set `discrete = FALSE` so ggplot uses a smooth gradient (`scale_*_gradientn()` under the hood).
+Sequential palettes such as `b2`, `r1`, `gr1`, and `gu1` are ordered ramps from FHI’s quantitative palettes. **`grable`** and **`greige`** are the gråblå and greige scales from the profile’s grey section—intended to pair with the main brand hues. For a continuous variable set `discrete = FALSE` so ggplot uses a smooth gradient (`scale_*_gradientn()` under the hood).
 
 ```{r quantitative}
 grid <- expand.grid(x = seq_len(24), y = seq_len(24))
@@ -53,7 +63,7 @@ ggplot(grid, aes(x, y, fill = value)) +
 
 ## Diverging palettes
 
-`diverging_b2_r1` combines the **r1** and **b2** ramps with white at the centre. Use it for values where the middle of the range should read as neutral (for example deviations from zero).
+`diverging_b2_r1` combines **R1** and **B2**-family tones with white at the centre, in line with FHI’s diverging guidance (two hues with a neutral midpoint, extendable with more B2/R1 steps). Use it when the middle of the scale should read as neutral—for example deviations from zero or a reference value.
 
 ```{r diverging}
 grid2 <- expand.grid(

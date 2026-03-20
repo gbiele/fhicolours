@@ -1,9 +1,13 @@
 #' FHI Color Palettes
 #'
+#' Sequential ramps `grable` and `greige` are gråblå and greige from the FHI
+#' visual profile (see \url{https://www.fhi.no/om/fhi/visuell-profil/innhold/farger/}),
+#' ordered light to dark like the other quantitative palettes.
+#'
 #' @export
 fhi_palettes <- list(
   qualitative = c(
-    "#ec7c73", "#40436d", "#61d2b2", "#a93c38", 
+    "#ec7c73", "#234e5f", "#61d2b2", "#a93c38", 
     "#f9dc8c", "#7176c9", "#09181f", "#65a9c5", 
     "#2a6a82", "#179463", "#f0af5e", "#c8e1ec", 
     "#d74b46", "#00b782", "#fda49b", "#4089a7"
@@ -12,7 +16,9 @@ fhi_palettes <- list(
   b2 = c("#f2fafe", "#e0f0f7", "#c8e1ec", "#8fc5dc", "#65a9c5", "#4089a7", "#2a6a82", "#234e5f", "#16323d", "#09181f"),
   gu1 = c("#fff7ee", "#faead5", "#f9dc8c", "#f0af5e", "#d39244", "#ac763a", "#83592d", "#5f4122", "#3c2917", "#221305"),
   gr1 = c("#f2fbfa", "#d9f4ed", "#b5e8d9", "#61d2b2", "#00b782", "#179463", "#396e4d", "#2d4f35", "#203323", "#0d1b0a"),
-  r1 = c("#fff6f5", "#fee9e6", "#ffd2cc", "#fda49b", "#ec7c73", "#d74b46", "#a93c38", "#7b2623", "#4f1a17", "#2c0807")
+  r1 = c("#fff6f5", "#fee9e6", "#ffd2cc", "#fda49b", "#ec7c73", "#d74b46", "#a93c38", "#7b2623", "#4f1a17", "#2c0807"),
+  grable = c("#edf4f7", "#dbe6ec", "#cbd9df", "#afc0c7", "#879ba5", "#435c68"),
+  greige = c("#fbfbfb", "#f7f6f5", "#f0edeb", "#e0dddb", "#cfd0cb", "#767676")
 )
 
 fhi_palettes$diverging_b2_r1 <- c(
