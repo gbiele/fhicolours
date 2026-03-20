@@ -1,0 +1,86 @@
+---
+title: "Using fhicolours"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using fhicolours}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.height = 3.5,
+  fig.align = "center",
+  dpi = 96
+)
+```
+
+The **fhicolours** package provides scales for **ggplot2** that follow the Folkehelseinstituttet (FHI) palette guidance. Three common patterns are **qualitative** colours for categories, **quantitative** ramps for continuous values, and **diverging** scales for data with a meaningful midpoint.
+
+```{r setup}
+library(ggplot2)
+library(fhicolours)
+```
+
+## Qualitative palettes
+
+Use `scale_color_fhi()` or `scale_fill_fhi()` with the default `discrete = TRUE` when the aesthetic maps to a factor or character variable. The `qualitative` palette gives distinct colours for up to sixteen classes (ggplot interpolates if you need more).
+
+```{r qualitative}
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point(alpha = 0.85, size = 2) +
+  scale_color_fhi(palette = "qualitative") +
+  theme_minimal() +
+  labs(title = "Discrete colour: qualitative palette")
+```
+
+## Quantitative palettes
+
+Sequential palettes such as `b2`, `r1`, `gr1`, and `gu1` are defined as ordered ramps. For a continuous variable set `discrete = FALSE` so ggplot uses a smooth gradient (`scale_*_gradientn()` under the hood).
+
+```{r quantitative}
+grid <- expand.grid(x = seq_len(24), y = seq_len(24))
+grid$value <- with(grid, sin(x / 4) + cos(y / 4))
+
+ggplot(grid, aes(x, y, fill = value)) +
+  geom_raster() +
+  scale_fill_fhi(palette = "b2", discrete = FALSE) +
+  coord_equal() +
+  theme_minimal() +
+  labs(title = "Continuous fill: sequential B2")
+```
+
+## Diverging palettes
+
+`diverging_b2_r1` combines the **r1** and **b2** ramps with white at the centre. Use it for values where the middle of the range should read as neutral (for example deviations from zero).
+
+```{r diverging}
+grid2 <- expand.grid(
+  x = seq(-pi, pi, length.out = 40),
+  y = seq(-pi, pi, length.out = 40)
+)
+grid2$value <- with(grid2, sin(x) * cos(y))
+
+ggplot(grid2, aes(x, y, fill = value)) +
+  geom_raster() +
+  scale_fill_fhi(palette = "diverging_b2_r1", discrete = FALSE) +
+  coord_equal() +
+  theme_minimal() +
+  labs(title = "Continuous fill: diverging B2 / R1")
+```
+
+## Matching scales
+
+Use `scale_fill_fhi()` when colour is mapped to `fill` (tiles, bars, densities) and `scale_color_fhi()` when it is mapped to `colour` (points, lines). The same `palette` and `discrete` arguments apply to both.
+
+```{r fill-bars, fig.height = 4}
+ggplot(mpg, aes(class, fill = drv)) +
+  geom_bar(position = "fill") +
+  scale_fill_fhi(palette = "qualitative") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1)) +
+  labs(title = "Discrete fill: qualitative palette", y = NULL)
+```
+
+To reverse any ramp (for example so darker means “more”), pass `reverse = TRUE` to the scale.
